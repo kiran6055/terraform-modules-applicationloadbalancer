@@ -33,3 +33,23 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+
+resource "aws_lb_target_group" "main" {
+  name     = var.target_group_name
+  protocol = "HTTP"
+  target_type = "ip"
+  port = 80
+  vpc_id   = var.vpc_id
+  health_check {
+    enabled = true
+    healthy_threshold = 3
+    interval = 15
+    path = "/health"
+    port = 80
+    protocol = "HTTP"
+    timeout = 6
+    matcher = "200-399"
+    unhealthy_threshold = 3
+  }
+}
+

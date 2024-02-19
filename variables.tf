@@ -21,3 +21,9 @@ variable "tags" {
 variable "app_alb_tags" {
 
 }
+
+
+
+variable "target_group_name" {
+
+}

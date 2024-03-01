@@ -1,11 +1,10 @@
 resource "aws_lb" "app_alb" {
   name             	  = var.app_alb_name
-  internal           	  = true
+  internal           	  = false
 #  load_balancer_type 	  = "application" 
 #  vpc_id                  = var.vpc_id
   security_groups      	  = var.security_groups
   subnets                 = var.subnets
-
 
   #enable_deletion_protection = true
 
@@ -53,3 +52,9 @@ resource "aws_lb_target_group" "main" {
   }
 }
 
+
+#resource "aws_lb_target_group_attachment" "main" {
+#  target_group_arn = aws_lb_target_group.main.arn
+#  target_id        = aws_lb.app_alb.arn
+#  port             = 80
+#}

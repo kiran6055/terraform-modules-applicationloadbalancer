@@ -27,3 +27,14 @@ variable "app_alb_tags" {
 variable "target_group_name" {
 
 }
+
+
+
+variable "target_group_arn" {
+
+}
+
+
+#variable "alb_arn" {
+#
+#}

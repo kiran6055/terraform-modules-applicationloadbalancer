@@ -1,4 +1,4 @@
-resource "aws_lb" "app_alb" {
+resource "aws_lb" "alb" {
   name             	  = var.app_alb_name
   internal           	  = false
 #  load_balancer_type 	  = "application" 
@@ -17,21 +17,17 @@ resource "aws_lb" "app_alb" {
 
 
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.app_alb.arn
+  count             = 2
+  load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
 
-  # This will add one listener on port no 80 and one default rule
   default_action {
-    type = "fixed-response"
-
-    fixed_response {
-      content_type = "text/plain"
-      message_body = "This is the fixed response from APP ALB"
-      status_code  = "200"
-    }
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
   }
 }
+
 
 resource "aws_lb_target_group" "main" {
   name     = var.target_group_name
@@ -53,8 +49,3 @@ resource "aws_lb_target_group" "main" {
 }
 
 
-#resource "aws_lb_target_group_attachment" "main" {
-#  target_group_arn = aws_lb_target_group.main.arn
-#  target_id        = aws_lb.app_alb.arn
-#  port             = 80
-#}

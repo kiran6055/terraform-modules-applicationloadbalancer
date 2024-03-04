@@ -35,6 +35,3 @@ variable "target_group_arn" {
 }
 
 
-#variable "alb_arn" {
-#
-#}

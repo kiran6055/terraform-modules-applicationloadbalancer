@@ -29,6 +29,21 @@ resource "aws_lb_listener" "http" {
 }
 
 
+
+
+resource "aws_lb_listener" "https" {
+  count             = 2
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = var.certificate_arn
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+}
+
+
 resource "aws_lb_target_group" "main" {
   name     = var.target_group_name
   protocol = "HTTP"

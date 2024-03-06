@@ -34,4 +34,8 @@ variable "target_group_arn" {
 
 }
 
+variable "certificate_arn" {
+
+}
+
 
